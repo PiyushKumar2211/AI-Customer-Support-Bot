@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Customer Support Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">AI Customer Support Bot</h1>
+                <nav class="app-nav">
+                    <button id="chat-tab" class="nav-btn nav-btn--active">Chat</button>
+                    <button id="admin-tab" class="nav-btn">Admin Dashboard</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Chat Interface -->
+        <main id="chat-view" class="view-container">
+            <div class="chat-container">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-status">
+                        <div class="status-indicator status-indicator--online"></div>
+                        <span class="status-text">AI Assistant Online</span>
+                    </div>
+                    <div class="session-info">
+                        <span id="session-id" class="session-id">Session: Loading...</span>
+                        <button id="clear-chat" class="btn btn--sm btn--outline">Clear Chat</button>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message message--bot">
+                        <div class="message-avatar message-avatar--bot">🤖</div>
+                        <div class="message-content">
+                            <div class="message-bubble message-bubble--bot">
+                                <p>Hi! I'm your AI customer support assistant. I can help you with billing questions, technical issues, product information, and account management. How can I assist you today?</p>
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div id="typing-indicator" class="typing-indicator hidden">
+                    <div class="message-avatar message-avatar--bot">🤖</div>
+                    <div class="typing-content">
+                        <div class="typing-bubble">
+                            <div class="typing-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div id="quick-actions" class="quick-actions">
+                    <p class="quick-actions-title">Try these common questions:</p>
+                    <div class="quick-actions-buttons">
+                        <button class="btn btn--sm btn--outline quick-action" data-message="How do I reset my password?">Reset Password</button>
+                        <button class="btn btn--sm btn--outline quick-action" data-message="What's included in the Pro plan?">Pro Plan Features</button>
+                        <button class="btn btn--sm btn--outline quick-action" data-message="How do I update my payment method?">Update Payment</button>
+                        <button class="btn btn--sm btn--outline quick-action" data-message="I need to speak to a human agent">Speak to Agent</button>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input">
+                    <div class="input-container">
+                        <input type="text" id="message-input" class="form-control" placeholder="Type your message..." maxlength="500">
+                        <button id="send-button" class="btn btn--primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m22 2-20 10 7.5 3L22 2ZM15 13l-7.5-3L22 2v20l-7-10Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Admin Dashboard -->
+        <main id="admin-view" class="view-container hidden">
+            <div class="admin-container">
+                <!-- Analytics Cards -->
+                <section class="analytics-grid">
+                    <div class="card analytics-card">
+                        <div class="card__body">
+                            <h3 class="analytics-title">Total Sessions</h3>
+                            <div class="analytics-value" id="total-sessions">1,247</div>
+                            <div class="analytics-change">+12% from last month</div>
+                        </div>
+                    </div>
+                    <div class="card analytics-card">
+                        <div class="card__body">
+                            <h3 class="analytics-title">Avg Session Length</h3>
+                            <div class="analytics-value" id="avg-session-length">4.2 min</div>
+                            <div class="analytics-change">-5% from last month</div>
+                        </div>
+                    </div>
+                    <div class="card analytics-card">
+                        <div class="card__body">
+                            <h3 class="analytics-title">Satisfaction Rating</h3>
+                            <div class="analytics-value" id="satisfaction-rating">4.3/5</div>
+                            <div class="analytics-change analytics-change--positive">+0.2 from last month</div>
+                        </div>
+                    </div>
+                    <div class="card analytics-card">
+                        <div class="card__body">
+                            <h3 class="analytics-title">Escalation Rate</h3>
+                            <div class="analytics-value" id="escalation-rate">12%</div>
+                            <div class="analytics-change">-3% from last month</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Charts Section -->
+                <section class="charts-section">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3 class="card-title">Query Categories</h3>
+                            <div class="chart-container">
+                                <canvas id="categories-chart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3 class="card-title">Response Time Distribution</h3>
+                            <div class="chart-container">
+                                <canvas id="response-time-chart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Live Sessions -->
+                <section class="live-sessions">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3 class="card-title">Recent Sessions</h3>
+                            <div class="sessions-list" id="sessions-list">
+                                <!-- Sessions will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Escalation Queue -->
+                <section class="escalation-section">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3 class="card-title">Escalation Queue</h3>
+                            <div class="escalation-list" id="escalation-list">
+                                <div class="escalation-item">
+                                    <div class="escalation-info">
+                                        <div class="escalation-session">Session: demo-003</div>
+                                        <div class="escalation-reason">Low confidence response</div>
+                                        <div class="escalation-time">5 minutes ago</div>
+                                    </div>
+                                    <div class="escalation-actions">
+                                        <button class="btn btn--sm btn--primary">Assign Agent</button>
+                                    </div>
+                                </div>
+                                <div class="escalation-item">
+                                    <div class="escalation-info">
+                                        <div class="escalation-session">Session: demo-004</div>
+                                        <div class="escalation-reason">User requested human agent</div>
+                                        <div class="escalation-time">12 minutes ago</div>
+                                    </div>
+                                    <div class="escalation-actions">
+                                        <button class="btn btn--sm btn--primary">Assign Agent</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Escalation Modal -->
+        <div id="escalation-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Connecting to Human Agent</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>I'm connecting you with one of our human support representatives. Please hold while I transfer your conversation...</p>
+                    <div class="escalation-status">
+                        <div class="status-indicator status-indicator--warning"></div>
+                        <span>Estimated wait time: 2-3 minutes</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn--outline" id="cancel-escalation">Cancel</button>
+                    <button class="btn btn--primary" id="confirm-escalation">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
