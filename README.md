@@ -36,10 +36,6 @@ A simulated AI-powered customer support chatbot with FAQ handling, contextual me
 - To use a real LLM, replace the `getLLMResponse` function in `server/server.js` with an API call to OpenAI, HuggingFace, etc.
 - For persistent sessions, connect to a database (e.g., SQLite, MongoDB).
 
-## Demo Video
 
-- [Add your demo video link here]
 
-## License
 
-MIT
